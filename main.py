@@ -1,8 +1,7 @@
 import cv2
-import numpy as np
 
 image = cv2.imread('./images/positions/test-2.png')
-template = cv2.imread('./images/pieces/white-king.png')
+template = cv2.imread('./images/pieces/classic/wq.png')
 
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
@@ -25,15 +24,15 @@ largest_contour = max(filtered_contours, key=cv2.contourArea)
 x, y, w, h = cv2.boundingRect(largest_contour)
 
 roi = image_gray[y:(y + h), x:(x + w)]
-resized_roi = cv2.resize(roi, (300, 300))
-resized_template = cv2.resize(template_gray, (37, 37))
+resized_roi = cv2.resize(roi, (400, 400))
+resized_template = cv2.resize(template_gray, (50, 50))
 
 # template matching
-res = cv2.matchTemplate(resized_roi, resized_template, cv2.TM_SQDIFF_NORMED)
+res = cv2.matchTemplate(resized_roi, resized_template, cv2.TM_CCOEFF)
 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
 
-x1, y1 = min_loc
-x2, y2 = min_loc[0] + resized_template.shape[1], min_loc[1] + resized_template.shape[0]
+x1, y1 = max_loc
+x2, y2 = max_loc[0] + resized_template.shape[1], max_loc[1] + resized_template.shape[0]
 
 cv2.rectangle(resized_roi, (x1, y1), (x2, y2), (0, 255, 0), 3)
 
