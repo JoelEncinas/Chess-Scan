@@ -1,9 +1,9 @@
 import cv2
 
 # todo add piece type as args
-def get_pieces():
+def get_pieces(w, h):
     piece_templates = []
-    template_size = (50, 50)  
+    template_size = (w, h)  
 
     for color in ['b', 'w']:
         for piece_type in ['p', 'r', 'n', 'b', 'q', 'k']:
