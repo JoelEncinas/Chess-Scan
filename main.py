@@ -1,5 +1,8 @@
 import cv2
 
+# url for pieces
+# https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
+
 image = cv2.imread('./images/positions/test-2.png')
 template = cv2.imread('./images/pieces/classic/wq.png')
 
