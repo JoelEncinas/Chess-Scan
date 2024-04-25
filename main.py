@@ -4,9 +4,10 @@ import cv2
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
 
 # load and grayscale images
-image = cv2.imread('./images/positions/test-2.png')
+image = cv2.imread('./images/positions/test-1.JPG')
 template = cv2.imread('./images/pieces/classic/bk.png')
 
+# load images
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 
