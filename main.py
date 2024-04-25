@@ -1,6 +1,7 @@
 import cv2
 from utils.load_pieces import get_pieces
 from utils.piece_types import get_piece_types
+from utils.board_to_fen import board_to_fen
 
 # url for pieces
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
@@ -78,6 +79,9 @@ for row in range(0, resized_roi.shape[0], square_size):
 print("Chessboard")
 for row in board:
     print(row)
+
+fen = board_to_fen(board)
+print(fen)
 
 # Display the chessboard image with rectangles drawn around matched pieces
 cv2.imshow('Chessboard with matched pieces', resized_roi)
