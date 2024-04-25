@@ -1,4 +1,5 @@
 import cv2
+from utils.load_pieces import get_pieces
 
 # url for pieces
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
@@ -10,6 +11,9 @@ template = cv2.imread('./images/pieces/classic/bk.png')
 # load images
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+
+# load pieces
+template_pieces = get_pieces()
 
 # find chessboard
 _, thresh = cv2.threshold(image_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)

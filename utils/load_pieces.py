@@ -1,9 +1,10 @@
 import cv2
 
+# todo add piece type as args
 def get_pieces():
     piece_templates = []
     template_size = (50, 50)  
-    
+
     for color in ['b', 'w']:
         for piece_type in ['p', 'r', 'n', 'b', 'q', 'k']:
             template_path = f'./images/pieces/classic/{color}{piece_type}.png'
