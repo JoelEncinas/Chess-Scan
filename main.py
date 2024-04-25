@@ -5,7 +5,7 @@ from utils.load_pieces import get_pieces
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
 
 # load and grayscale images
-image = cv2.imread('./images/positions/test-1.JPG')
+image = cv2.imread('./images/positions/test-5.PNG')
 template = cv2.imread('./images/pieces/classic/bk.png')
 
 # load images
@@ -37,36 +37,57 @@ roi = image_gray[y:(y + h), x:(x + w)]
 resized_roi = cv2.resize(roi, (400, 400))
 resized_template = cv2.resize(template_gray, (50, 50))
 
-# template matching
-res = cv2.matchTemplate(resized_roi, resized_template, cv2.TM_CCOEFF)
-min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+# Define the size of each square (assuming it's 400x400)
+square_size = 50
+threshold = 0.8  # Threshold for template matching
 
-x1, y1 = max_loc
-x2, y2 = max_loc[0] + resized_template.shape[1], max_loc[1] + resized_template.shape[0]
+# Piece types in the given order
+piece_types = [
+    'black pawn  ', 'black rook  ', 'black knight', 'black bishop', 'black queen ', 'black king  ',
+    'white pawn  ', 'white rook  ', 'white knight', 'white bishop', 'white queen ', 'white king  ',
+]
 
-cv2.rectangle(resized_roi, (x1, y1), (x2, y2), (0, 255, 0), 3)
+board = [['empty' for _ in range(8)] for _ in range(8)]
 
-# Initialize array to store positions
-positions = [['empty' for _ in range(8)] for _ in range(8)]
+# Loop through each square of the chessboard
+for row in range(0, resized_roi.shape[0], square_size):
+    for col in range(0, resized_roi.shape[1], square_size):
+        roi = resized_roi[row:row+square_size, col:col+square_size]  # Define ROI for current square
 
-# Calculate the row and column indices
-row_index1 = y1 // 50
-col_index1 = x1 // 50
+        # Initialize variables to keep track of the maximum match score and corresponding piece template
+        max_match_score = -1
+        best_piece_template = None
 
-row_index2 = y2 // 50
-col_index2 = x2 // 50
+        # Loop through each template piece
+        for template_index, template_piece in enumerate(template_pieces):
+            # Perform template matching
+            res = cv2.matchTemplate(roi, template_piece, cv2.TM_CCOEFF)
+            _, max_val, _, _ = cv2.minMaxLoc(res)
 
-# Add the position to the chessboard
-for i in range(row_index1, row_index2):
-    for j in range(col_index1, col_index2):
-        positions[i][j] = 'piece'
+            # If the match score is above threshold and higher than previous matches
+            if max_val > threshold and max_val > max_match_score:
+                max_match_score = max_val
+                best_piece_template_index = template_index
 
-# Print the updated positions
+        # If a piece template was found for the square
+        if best_piece_template_index is not None:
+            if best_piece_template_index == 8 and max_match_score < 8666666.0:
+                matched_piece_type = 'empty square'
+            else:
+                # Get the corresponding piece type based on the index
+                matched_piece_type = piece_types[best_piece_template_index]
+
+            # save to board
+            board[row // 50][ col // 50] = matched_piece_type
+
+            # Print the matched piece type and draw a rectangle around it
+            cv2.rectangle(resized_roi, (col, row), (col + square_size, row + square_size), (0, 255, 0), 3)
+
 print("Chessboard")
-for row in positions:
+for row in board:
     print(row)
 
-# print image
-cv2.imshow("Chess", resized_roi)
+# Display the chessboard image with rectangles drawn around matched pieces
+cv2.imshow('Chessboard with matched pieces', resized_roi)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
