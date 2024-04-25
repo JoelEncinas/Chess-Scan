@@ -4,13 +4,12 @@ from utils.load_pieces import get_pieces
 # url for pieces
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
 
-# load and grayscale images
-image = cv2.imread('./images/positions/test-5.PNG')
-template = cv2.imread('./images/pieces/classic/bk.png')
+# template and image to match size
+square_size = 50
+board_size = 400
 
-# load images
-image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+# load image to match
+image_gray = cv2.imread('./images/positions/test-5.PNG', cv2.IMREAD_GRAYSCALE)
 
 # load pieces
 template_pieces = get_pieces()
@@ -34,11 +33,8 @@ largest_contour = max(filtered_contours, key=cv2.contourArea)
 x, y, w, h = cv2.boundingRect(largest_contour)
 
 roi = image_gray[y:(y + h), x:(x + w)]
-resized_roi = cv2.resize(roi, (400, 400))
-resized_template = cv2.resize(template_gray, (50, 50))
+resized_roi = cv2.resize(roi, (board_size, board_size))
 
-# Define the size of each square (assuming it's 400x400)
-square_size = 50
 threshold = 0.8  # Threshold for template matching
 
 # Piece types in the given order
