@@ -1,0 +1,16 @@
+services:
+  - type: web
+    plan: free
+    name: chessvision
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn chessvision.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chessvisiondb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
