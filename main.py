@@ -56,14 +56,15 @@ for row in range(0, resized_roi.shape[0], square_size):
 
             cv2.rectangle(resized_roi, (col, row), (col + square_size, row + square_size), (0, 255, 0), 3)
 
-print("Chessboard")
+# print("Chessboard")
 for row in board:
-    print(row)
+    pass
+    # print(row)
 
 fen = board_to_fen(board)
-print(fen)
+# print(fen)
 
-print(get_url_from_position(fen))
+# print(get_url_from_position(fen))
 
 # Display the chessboard image with rectangles drawn around matched pieces
 cv2.imshow('Chessboard with matched pieces', resized_roi)
