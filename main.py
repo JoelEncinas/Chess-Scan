@@ -3,6 +3,7 @@ from utils.load_pieces import get_pieces
 from utils.piece_types import get_piece_types
 from utils.filter_contours import filter_contours
 from utils.board_to_fen import board_to_fen
+from utils.get_url_from_position import get_url_from_position
 
 # url for pieces
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
@@ -61,6 +62,8 @@ for row in board:
 
 fen = board_to_fen(board)
 print(fen)
+
+print(get_url_from_position(fen))
 
 # Display the chessboard image with rectangles drawn around matched pieces
 cv2.imshow('Chessboard with matched pieces', resized_roi)
