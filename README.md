@@ -1,2 +1,3 @@
-# Chess-vision
-chess vision
+# Chess-Scan
+
+Chess app
