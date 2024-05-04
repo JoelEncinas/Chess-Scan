@@ -25,9 +25,17 @@
     <main class="container">
       <div class="row text-center justify-content-center">
         <div class="col">
-          <h1 class="display-4">Hello World!</h1>
+          <h1 class="display-4">Chess Scan!</h1>
         </div>
       </div>
+
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="image" id="imageInput" />
+        <button type="submit" id="uploadButton">Upload Image</button>
+      </form>
+      <div id="result"></div>
+
+      <script src="{% static "chessscan/upload_script.js" %}"></script>
     </main>
   </body>
 </html>
