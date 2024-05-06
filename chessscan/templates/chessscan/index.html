@@ -50,8 +50,8 @@
     <div class="container">
       <div class="mt-5 text-center rounded-3">
         <h1 class="text-body-emphasis">Chess Scan</h1>
-        <p class="col-lg-8 mx-auto fs-5 text-muted">
-          Get FEN and board evaluation from a screenshot
+        <p class="col-lg-8 mx-auto fs-5">
+          Get FEN and board evaluation from a screenshot, upload an image and select the piece type:
         </p>
         <div class="d-inline-flex mb-5">
           <form id="uploadForm" enctype="multipart/form-data">
@@ -60,9 +60,11 @@
               <label for="imageInput" class="btn btn-secondary m-2"
                 >Choose file</label
               >
-              <span id="file-chosen" class="pb-5">No file chosen</span>
+              <span id="file-chosen" class="pb-5 text-primary-emphasis">No file chosen</span>
 
+              <p class="text-muted">Select Piece type</p>
               <div class="d-flex flex-row justify-content-end pb-3">
+
                 <div class="custom-control custom-radio">
                   <input
                     type="radio"
