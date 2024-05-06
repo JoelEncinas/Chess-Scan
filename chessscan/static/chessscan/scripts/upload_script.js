@@ -8,9 +8,14 @@ document
 
     console.log("script working");
 
-    fetch("/upload_image/", {
+    const request = new Request(backendUploadImageUrl, {
+      headers: { "X-CSRFToken": csrftoken },
+    });
+
+    fetch(request, {
       method: "POST",
       body: formData,
+      mode: "same-origin",
     })
       .then((response) => response.json())
       .then((data) => {
