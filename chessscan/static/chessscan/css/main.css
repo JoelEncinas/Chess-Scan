@@ -13,10 +13,19 @@
     width: 65px;
 }
 
+.custom-radio {
+    padding: 0 10px;
+}
+
 .custom-control-label:hover {
     cursor: pointer;
 }
 
 .container {
     max-width: 600px;
+}
+
+.orange-border {
+    border: 3px solid #E95420;
+    border-radius: 10px;
 }

@@ -9,25 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 2500);
   }
 
-  const formClassic = document.getElementById("wood");
-  const formWood = document.getElementById("classic");
   const woodLabel = document.getElementById("wood-label");
   const classicLabel = document.getElementById("classic-label");
 
-  formWood.addEventListener("change", function () {
-    if (this.checked) {
-      woodLabel.style.backgroundColor = "red";
-    } else {
-      woodLabel.style.backgroundColor = "";
-    }
+  woodLabel.addEventListener("click", function () {
+    woodLabel.classList.add("orange-border");
+    classicLabel.classList.remove("orange-border");
   });
 
-  formClassic.addEventListener("change", function () {
-    if (this.checked) {
-      classicLabel.style.backgroundColor = "red";
-    } else {
-      classicLabel.style.backgroundColor = "";
-    }
+  classicLabel.addEventListener("click", function () {
+    classicLabel.classList.add("orange-border");
+    woodLabel.classList.remove("orange-border");
   });
 
   clipboard = document.getElementById("copy-to-clipboard");
