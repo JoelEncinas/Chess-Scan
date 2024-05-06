@@ -19,8 +19,9 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        document.getElementById("result").innerText = data.message;
+        document.getElementById("imageContainer").src =
+          "data:image/jpg;base64," + data.image;
+        document.getElementById("result").innerText = data.fen;
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -1,4 +1,5 @@
-import cv2
+import cv2, json, base64
+import numpy as np
 from chessscan.utils.load_pieces import get_pieces
 from chessscan.utils.piece_types import get_piece_types
 from chessscan.utils.filter_contours import filter_contours
@@ -56,8 +57,11 @@ def process_image(image_url):
                 cv2.rectangle(resized_roi, (col, row), (col + square_size, row + square_size), (0, 255, 0), 3)
 
     fen = board_to_fen(board)
+    _, im_arr = cv2.imencode('.jpg', resized_roi)
+    im_bytes = im_arr.tobytes()
+    im_b64 = base64.b64encode(im_bytes).decode('utf-8')
 
-    return resized_roi, fen
+    return im_b64, fen
 
 # print("Chessboard")
 for row in board:
