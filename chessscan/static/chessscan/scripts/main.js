@@ -15,8 +15,6 @@ document
     var imageFile = document.getElementById("imageInput").files[0];
     formData.append("image", imageFile);
 
-    console.log("script working");
-
     const request = new Request(backendUploadImageUrl, {
       headers: { "X-CSRFToken": csrftoken },
     });
@@ -26,8 +24,16 @@ document
       body: formData,
       mode: "same-origin",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 204) {
+          throw new Error("Board not found!");
+        }
+        return response.json();
+      })
       .then((data) => {
+        console.log(data);
+
         document.getElementById("imageContainer").src =
           "data:image/jpg;base64," + data.image;
         document.getElementById("result").value = data.fen;

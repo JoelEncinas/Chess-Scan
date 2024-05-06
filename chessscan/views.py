@@ -14,19 +14,20 @@ def about(request):
     return render(request, 'chessscan/about.html', {})
 
 def upload_image(request):
-    image_path = os.path.join('images/positions', 'test-2.PNG')
+    if request.method == 'POST' and request.FILES:
+        uploaded_file = request.FILES['image']
+        print(uploaded_file)
+        image_data, fen = process_image(uploaded_file)
 
-    # Your backend logic goes here
-    # For example, let's say you want to return some JSON data
-    image_data, fen = process_image(image_path)
+        if image_data == None and fen == None:
+            return JsonResponse({'error': 'No chessboard detected'}, status=204)
 
-    print(image_data)
-
-    data = {
-        'message': 'Backend stuff executed successfully',
-        'image': image_data,
-        'fen': fen,
-        'lichess': get_url_from_position(fen)
-    }
+        data = {
+            'image': image_data,
+            'fen': fen,
+            'lichess': get_url_from_position(fen)
+        }
+        
+        return JsonResponse(data)
     
-    return JsonResponse(data)
+    return JsonResponse({'error': 'No file uploaded'}, status=400)

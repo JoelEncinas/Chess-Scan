@@ -4,7 +4,6 @@ from chessscan.utils.load_pieces import get_pieces
 from chessscan.utils.piece_types import get_piece_types
 from chessscan.utils.filter_contours import filter_contours
 from chessscan.utils.board_to_fen import board_to_fen
-from chessscan.utils.get_url_from_position import get_url_from_position
 
 # url for pieces
 # https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
@@ -18,13 +17,19 @@ board = [['empty' for _ in range(8)] for _ in range(8)]
 template_pieces = get_pieces(50, 50)
 piece_types = get_piece_types()
 
-def process_image(image_url):
-    image_gray = cv2.imread(image_url, cv2.IMREAD_GRAYSCALE)
+def process_image(uploaded_file):
+    nparr = np.fromstring(uploaded_file.read(), np.uint8)
+    image_gray = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
 
     _, thresh = cv2.threshold(image_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     filtered_contours = filter_contours(contours)
+
+    if not filtered_contours:  
+        return None, None  
+
+
     largest_contour = max(filtered_contours, key=cv2.contourArea)
 
     x, y, w, h = cv2.boundingRect(largest_contour)
@@ -56,19 +61,13 @@ def process_image(image_url):
 
                 cv2.rectangle(resized_roi, (col, row), (col + square_size, row + square_size), (0, 255, 0), 3)
 
+    for row in board:
+        pass
+        # print(row)
+
     fen = board_to_fen(board)
     _, im_arr = cv2.imencode('.jpg', resized_roi)
     im_bytes = im_arr.tobytes()
     im_b64 = base64.b64encode(im_bytes).decode('utf-8')
 
     return im_b64, fen
-
-# print("Chessboard")
-for row in board:
-    pass
-    # print(row)
-
-
-# print(fen)
-
-# print(get_url_from_position(fen))
