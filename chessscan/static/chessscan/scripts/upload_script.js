@@ -19,6 +19,7 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         document.getElementById("result").innerText = data.message;
       })
       .catch((error) => {

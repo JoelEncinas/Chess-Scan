@@ -75,7 +75,6 @@
     {% csrf_token %}
     
     <script>
-      // You can define JavaScript variables to store URLs
       const backendUploadImageUrl = "{% url 'upload_image' %}";
       const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     </script>
