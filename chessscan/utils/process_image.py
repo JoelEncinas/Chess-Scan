@@ -1,23 +1,18 @@
-import cv2, json, base64
+import cv2, base64
 import numpy as np
 from chessscan.utils.load_pieces import get_pieces
 from chessscan.utils.piece_types import get_piece_types
 from chessscan.utils.filter_contours import filter_contours
 from chessscan.utils.board_to_fen import board_to_fen
 
-# url for pieces
-# https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
-
-# settings
 square_size = 50
 board_size = 400
-threshold = 0.8 
+threshold = 0.99
 empty_square_max_match_score = 8666666.0
 board = [['empty' for _ in range(8)] for _ in range(8)]
-template_pieces = get_pieces(50, 50)
 piece_types = get_piece_types()
 
-def process_image(uploaded_file):
+def process_image(uploaded_file, piece_material):
     nparr = np.fromstring(uploaded_file.read(), np.uint8)
     image_gray = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
 
@@ -29,6 +24,7 @@ def process_image(uploaded_file):
     if not filtered_contours:  
         return None, None  
 
+    template_pieces = get_pieces(50, 50, piece_material)
 
     largest_contour = max(filtered_contours, key=cv2.contourArea)
 
@@ -60,10 +56,6 @@ def process_image(uploaded_file):
                 board[row // 50][ col // 50] = matched_piece_type
 
                 cv2.rectangle(resized_roi, (col, row), (col + square_size, row + square_size), (0, 255, 0), 3)
-
-    for row in board:
-        pass
-        # print(row)
 
     fen = board_to_fen(board)
     _, im_arr = cv2.imencode('.jpg', resized_roi)

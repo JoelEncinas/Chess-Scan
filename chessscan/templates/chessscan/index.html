@@ -54,11 +54,41 @@
           Get FEN and board evaluation from a screenshot
         </p>
         <div class="d-inline-flex mb-5">
-          <form id="uploadForm" enctype="multipart/form-data"> 
+          <form id="uploadForm" enctype="multipart/form-data">
             <div class="d-flex flex-column">
               <input type="file" name="image" id="imageInput" hidden />
-              <label for="imageInput" class="btn btn-secondary m-2">Choose file</label>
+              <label for="imageInput" class="btn btn-secondary m-2"
+                >Choose file</label
+              >
               <span id="file-chosen" class="pb-5">No file chosen</span>
+
+              <div class="d-flex flex-row">
+                <div class="custom-control custom-radio">
+                  <input
+                    type="radio"
+                    id="image1"
+                    name="image"
+                    class="custom-control-input"
+                    checked
+                  />
+                  <label class="custom-control-label" for="image1"
+                    ><img src="{% static "chessscan/img/bk_classic.png" %}" alt="Image 1"
+                  /></label>
+                </div>
+  
+                <div class="custom-control custom-radio">
+                  <input
+                    type="radio"
+                    id="image2"
+                    name="image"
+                    class="custom-control-input"
+                  />
+                  <label class="custom-control-label" for="image2"
+                    ><img src="{% static "chessscan/img/bk_wood.png" %}" alt="Image 2"
+                  /></label>
+                </div>
+              </div>
+
               <button type="submit" id="uploadButton" class="btn btn-primary">
                 Scan
               </button>
@@ -70,28 +100,49 @@
 
     <div class="container">
       <div class="text-center rounded-3">
-        <img id="imageContainer"src="" alt="">
+        <img id="imageContainer" src="" alt="" />
         <div class="input-group mb-3">
-          <input id="result" type="text" class="form-control" placeholder="FEN" aria-label="fen" aria-describedby="copy-to-clipboard">
-          <button class="btn btn-primary" type="button" id="copy-to-clipboard">Copy to clipboard</button>
+          <input
+            id="result"
+            type="text"
+            class="form-control"
+            placeholder="FEN"
+            aria-label="fen"
+            aria-describedby="copy-to-clipboard"
+          />
+          <button class="btn btn-primary" type="button" id="copy-to-clipboard">
+            Copy to clipboard
+          </button>
         </div>
-        <a id="lichess-link" href="" class="btn btn-light d-none" target="_blank">Analyze on Lichess</a>
-      </div>  
+        <a
+          id="lichess-link"
+          href=""
+          class="btn btn-light d-none"
+          target="_blank"
+          >Analyze on Lichess</a
+        >
+      </div>
     </div>
 
-    <div id="myAlert" class="alert alert-success d-none">
+    <div id="success-alert" class="alert alert-success d-none">
       Copied to clipboard!
     </div>
 
     {% csrf_token %}
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
 
     <script>
       const backendUploadImageUrl = "{% url 'upload_image' %}";
-      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const csrftoken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
     </script>
+
     <script src="{% static "chessscan/scripts/main.js" %}"></script>
-    
   </body>
 </html>

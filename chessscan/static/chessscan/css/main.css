@@ -2,7 +2,7 @@
     width: 100px;
 }
 
-#myAlert {
+#success-alert {
     position: absolute;
     top: 10vh;
     left: 2vw;

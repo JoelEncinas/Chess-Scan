@@ -1,4 +1,4 @@
-var alert = document.getElementById("myAlert");
+var alert = document.getElementById("success-alert");
 
 function showAlert() {
   alert.classList.remove("d-none");
@@ -32,8 +32,6 @@ document
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-
         document.getElementById("imageContainer").src =
           "data:image/jpg;base64," + data.image;
         document.getElementById("result").value = data.fen;
