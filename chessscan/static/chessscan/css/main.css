@@ -1,3 +1,9 @@
 .navbar-link-img {
     width: 100px;
 }
+
+#myAlert {
+    position: absolute;
+    top: 10vh;
+    left: 2vw;
+}

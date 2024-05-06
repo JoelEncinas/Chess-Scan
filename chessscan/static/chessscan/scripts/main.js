@@ -1,3 +1,12 @@
+var alert = document.getElementById("myAlert");
+
+function showAlert() {
+  alert.classList.remove("d-none");
+  setTimeout(function () {
+    alert.classList.add("d-none");
+  }, 3500);
+}
+
 document
   .getElementById("uploadForm")
   .addEventListener("submit", function (event) {
@@ -21,7 +30,16 @@ document
       .then((data) => {
         document.getElementById("imageContainer").src =
           "data:image/jpg;base64," + data.image;
-        document.getElementById("result").innerText = data.fen;
+        document.getElementById("result").value = data.fen;
+        document.getElementById("lichess-link").classList.remove("d-none");
+        document.getElementById("lichess-link").href = data.lichess;
+
+        document
+          .getElementById("copy-to-clipboard")
+          .addEventListener("click", function () {
+            navigator.clipboard.writeText(data.fen);
+            showAlert();
+          });
       })
       .catch((error) => {
         console.error("Error:", error);

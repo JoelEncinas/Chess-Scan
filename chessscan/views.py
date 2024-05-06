@@ -3,6 +3,7 @@ import os, base64
 from django.shortcuts import render
 from django.http import JsonResponse
 from chessscan.utils.process_image import process_image
+from chessscan.utils.get_url_from_position import get_url_from_position
 
 # Create your views here.
 
@@ -24,7 +25,8 @@ def upload_image(request):
     data = {
         'message': 'Backend stuff executed successfully',
         'image': image_data,
-        'fen': fen
+        'fen': fen,
+        'lichess': get_url_from_position(fen)
     }
     
     return JsonResponse(data)
