@@ -15,6 +15,12 @@ document
     var imageFile = document.getElementById("imageInput").files[0];
     formData.append("image", imageFile);
 
+    var selectedRadioButton = document.querySelector(
+      'input[name="piece"]:checked'
+    );
+
+    formData.append("piece_material", selectedRadioButton.id);
+
     const request = new Request(backendUploadImageUrl, {
       headers: { "X-CSRFToken": csrftoken },
     });

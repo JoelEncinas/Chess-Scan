@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import JsonResponse
 from chessscan.utils.process_image import process_image
@@ -10,10 +12,9 @@ def about(request):
     return render(request, 'chessscan/about.html', {})
 
 def upload_image(request):
-    if request.method == 'POST' and request.FILES:
+    if request.method == 'POST':
         uploaded_file = request.FILES['image']
-
-        image_data, fen = process_image(uploaded_file, 'classic')
+        image_data, fen = process_image(uploaded_file, request.POST['piece_material'])
 
         if image_data == None and fen == None:
             return JsonResponse({'error': 'No chessboard detected'}, status=204)
