@@ -13,16 +13,26 @@ def about(request):
 
 def upload_image(request):
     if request.method == 'POST':
-        uploaded_file = request.FILES['image']
-        image_data, fen = process_image(uploaded_file, request.POST['piece_material'])
+        uploaded_file = ''
+        piece_material = ''
+
+        if 'image' not in request.FILES:
+            return JsonResponse({'error': 'No image uploaded'}, status=400)
+        
+        else:
+            uploaded_file = request.FILES['image']
+
+        piece_material = request.POST['piece_material']
+        image_data, fen = process_image(uploaded_file, piece_material)
 
         if image_data == None and fen == None:
-            return JsonResponse({'error': 'No chessboard detected'}, status=204)
+            return JsonResponse({'error': 'No chessboard detected'}, status=418)
 
         data = {
             'image': image_data,
             'fen': fen,
-            'lichess': get_url_from_position(fen)
+            'lichess': get_url_from_position(fen),
+            'piece_material': piece_material
         }
         
         return JsonResponse(data)

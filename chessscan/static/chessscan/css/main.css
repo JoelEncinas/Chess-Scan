@@ -2,8 +2,21 @@
     width: 100px;
 }
 
-#success-alert {
+#success-alert,
+#danger-alert {
     position: absolute;
     top: 10vh;
     left: 2vw;
+}
+
+.custom-control-label img {
+    width: 65px;
+}
+
+.custom-control-label:hover {
+    cursor: pointer;
+}
+
+.container {
+    max-width: 600px;
 }

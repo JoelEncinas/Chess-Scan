@@ -56,13 +56,13 @@
         <div class="d-inline-flex mb-5">
           <form id="uploadForm" enctype="multipart/form-data">
             <div class="d-flex flex-column">
-              <input type="file" name="image" id="imageInput" hidden />
+              <input type="file" name="image" id="imageInput" hidden/>
               <label for="imageInput" class="btn btn-secondary m-2"
                 >Choose file</label
               >
               <span id="file-chosen" class="pb-5">No file chosen</span>
 
-              <div class="d-flex flex-row">
+              <div class="d-flex flex-row justify-content-end pb-3">
                 <div class="custom-control custom-radio">
                   <input
                     type="radio"
@@ -70,8 +70,9 @@
                     name="piece"
                     class="custom-control-input"
                     checked
+                    hidden
                   />
-                  <label class="custom-control-label" for="classic"
+                  <label class="custom-control-label" for="classic" id="classic-label"
                     ><img src="{% static "chessscan/img/bk_classic.png" %}" alt="Image 1"
                   /></label>
                 </div>
@@ -82,8 +83,9 @@
                     id="wood"
                     name="piece"
                     class="custom-control-input"
+                    hidden
                   />
-                  <label class="custom-control-label" for="wood"
+                  <label class="custom-control-label" for="wood" id="wood-label"
                     ><img src="{% static "chessscan/img/bk_wood.png" %}" alt="Image 2"
                   /></label>
                 </div>
@@ -99,8 +101,10 @@
     </div>
 
     <div class="container">
-      <div class="text-center rounded-3">
-        <img id="imageContainer" src="" alt="" />
+      <div class="text-center rounded-3 d-none" id="scan">
+        <div class="pb-3">
+          <img id="imageContainer" src="" alt=""/>
+        </div>
         <div class="input-group mb-3">
           <input
             id="result"
@@ -126,6 +130,10 @@
 
     <div id="success-alert" class="alert alert-success d-none">
       Copied to clipboard!
+    </div>
+
+    <div id="danger-alert" class="alert alert-danger d-none">
+      Error
     </div>
 
     {% csrf_token %}
